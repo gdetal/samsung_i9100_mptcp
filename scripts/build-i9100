@@ -37,8 +37,12 @@ TMP_INITRAMFS_CPIO=`mktemp -t initramfs.cpio.XXXXXX`
 export ARCH=arm
 export USE_SEC_FIPS_MODE=true
 
-printhl "Setting default .config"
-make_v u1_defconfig
+if [ ! -e .config ]; then 
+	printhl "Setting default .config"
+	make_v u1_defconfig
+else
+	printhl ".config already exists, skipping"
+fi
 
 printhl "Compiling... (this step can take a long time)"
 make_v modules_prepare modules
